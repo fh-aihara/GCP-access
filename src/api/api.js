@@ -3,7 +3,7 @@ import axios from "axios";
 
 let base = "";
 if (JSON.parse(process.env.VUE_APP_ENDPOINT_USE_PROD)) {
-  base = "http://127.0.0.1:8000/api/";
+  base = "http://13.230.24.175:8000/api/";
 } else {
   base = "http://127.0.0.1:8000/api/";
 }

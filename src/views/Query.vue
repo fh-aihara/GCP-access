@@ -56,7 +56,7 @@ export default {
   mounted() {},
   computed: {},
   methods: {
-    async executeQuery() {
+    executeQuery() {
       api
         .postBigquery({ SQL: this.sqlQuery })
         .then((response) => {
