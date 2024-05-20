@@ -13,7 +13,7 @@
             </p>
             <form action="">
               <div
-                class="relative w-full h-14 py-4 px-3 mb-8 border border-gray-400 hover:border-blue focus-within:border-green-500 rounded-lg"
+                class="relative w-full h-14 py-4 px-3 mb-8 border border-gray-400 hover:border-blue focus-within:border-gray-500 rounded-lg"
               >
                 <span
                   class="absolute bottom-full left-0 ml-3 -mb-1 transform translate-y-0.5 text-xs font-semibold text-gray-600 px-1 bg-gray-200"
@@ -27,7 +27,7 @@
                 />
               </div>
               <div
-                class="relative w-full h-14 py-4 px-3 mb-3 border border-gray-400 hover:border-blue focus-within:border-green-500 rounded-lg"
+                class="relative w-full h-14 py-4 px-3 mb-3 border border-gray-400 hover:border-blue focus-within:border-gray-500 rounded-lg"
               >
                 <span
                   class="absolute bottom-full left-0 ml-3 -mb-1 transform translate-y-0.5 text-xs font-semibold text-gray-600 px-1 bg-gray-200"
@@ -43,17 +43,17 @@
               </div>
             </form>
             <button
-              class="mt-6 block w-full py-4 mb-4 leading-6 text-white font-semibold rounded-lg transition duration-200"
+              class="mt-8 block w-full py-4 mb-4 leading-6 text-white font-semibold rounded-lg transition duration-200"
               :class="
                 username != '' && this.password != '' && !loading
-                  ? 'bg-green-500 hover:bg-green-600'
+                  ? 'bg-blue-500 hover:bg-blue-600'
                   : 'bg-gray-500 hover:bg-gray-600'
               "
               :disabled="!username || !password || loading"
               @click="signIn"
             >
               <i class="pi pi-spin pi-spinner text-sm" v-if="loading"></i>
-              Sign In
+              Login
             </button>
           </div>
         </div>
@@ -110,7 +110,8 @@ export default {
               duration: 3000,
             });
             this.loading = false;
-            return;
+            this.$store.commit("updateuserId", 1);
+            this.$router.replace("/query");
           }
         })
         .catch((error) => {

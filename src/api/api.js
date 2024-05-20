@@ -19,15 +19,13 @@ export default {
   login(params) {
     return client.post("/login", params);
   },
-  // getAdminUser(params) {
-  //   return client.get("/admin-user", params);
   // },
   // getevents(params) {
   //   return client.get("/events", params);
   // },
-  // postevents(params) {
-  //   return client.post("/events", params);
-  // },
+  postBigquery(params) {
+    return client.post("/gcp/query", params);
+  },
   // deleteEvent(params) {
   //   return client.delete(`/events/${params.event_id}/cancel`, params);
   // },

@@ -2,27 +2,13 @@ import { createRouter, createWebHistory } from "vue-router";
 import store from "@/store";
 
 import LoginView from "../views/LoginPage.vue";
-import KycCheckPageView from "../views/KycCheck";
-import KycListPageView from "../views/KycList";
-import TableViewPageView from "../views/TableView";
+import QueryView from "../views/Query";
 
 const routes = [
   {
-    path: "/kyc/:id",
-    name: "kyc",
-    component: KycCheckPageView,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/kyc-list",
-    name: "kycList",
-    component: KycListPageView,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/table-view",
-    name: "tableView",
-    component: TableViewPageView,
+    path: "/query",
+    name: "query",
+    component: QueryView,
     meta: { requiresAuth: true },
   },
   {
