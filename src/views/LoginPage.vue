@@ -64,7 +64,7 @@
 
 <script>
 import api from "@/api/api.js";
-import store from "@/store";
+// import store from "@/store";
 
 export default {
   data() {
@@ -74,54 +74,47 @@ export default {
       loading: false,
     };
   },
-  computed: {
-    user_id() {
-      return this.$store.getters["userId"];
-    },
-    token() {
-      return this.$store.getters["authToken"];
-    },
-  },
+  computed: {},
   methods: {
     signIn: function () {
       this.loading = true;
-      var SHA256 = require("crypto-js/sha256");
-      const pw_token = SHA256(this.password);
       api
         .login({
-          name: this.username,
-          password: pw_token.toString(),
+          username: this.username,
+          password: this.password,
         })
         .then((response) => {
-          const token = SHA256(this.password + response.data);
-          store.commit("updateauthToken", token.toString());
-          this.$toast.show("ログインに成功しました", {
-            type: "success",
-            position: "top-right",
-            duration: 3000,
-          });
-          api
-            .getAdminUser()
-            .then((response) => {
-              console.log(response);
-              store.commit("updateuserId", response.data.admin_id);
-              store.commit("updateauthority", response.data.authority);
-              this.$router.replace("/table-view");
-            })
-            .catch(() => {
-              this.$toast.show(
-                "アカウント情報の取得に失敗しました。システム管理者にお問合せください。",
-                {
-                  type: "error",
-                  position: "top-right",
-                  duration: 5000,
-                }
-              );
+          console.log(response);
+          if (response.data == "WRONG") {
+            this.$toast.show("ユーザー名又はパスワードが間違っています", {
+              type: "error",
+              position: "top-right",
+              duration: 5000,
             });
-          this.loading = false;
+            this.loading = false;
+            return;
+          }
+          if (response.data == "ERROR") {
+            this.$toast.show("エラーが発生しました。", {
+              type: "error",
+              position: "top-right",
+              duration: 5000,
+            });
+            this.loading = false;
+            return;
+          }
+          if (response.data == "SUCCESS") {
+            this.$toast.show("ログインに成功しました", {
+              type: "success",
+              position: "top-right",
+              duration: 3000,
+            });
+            this.loading = false;
+            return;
+          }
         })
         .catch((error) => {
-          this.$toast.show("Username又はPasswordが間違っています", {
+          this.$toast.show("エラーが発生しました。", {
             type: "error",
             position: "top-right",
             duration: 5000,
