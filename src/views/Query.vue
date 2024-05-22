@@ -68,10 +68,10 @@ export default {
                 this.columns.map((col) => col.label).join(",") + "\n";
               console.log(this.results.length);
               for (let i = 0; i < this.results.length; i++) {
-                output +=
-                  this.results
-                    .map((col) => this.results[i][col.key])
-                    .join(",") + "\n";
+                for (let j = 0; j < this.columns.length; j++) {
+                  output += this.results[i][this.columns[j].label] + ",";
+                }
+                output += "\n";
               }
               let csv = "\ufeff";
               csv += output;
