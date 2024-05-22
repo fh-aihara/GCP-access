@@ -157,6 +157,12 @@ export default {
               link.href = window.URL.createObjectURL(blob);
               link.download = "itandi_prod_data.csv";
               link.click();
+
+              api.getQueries().then((response) => {
+                this.queries = response.data;
+                this.items = this.queries;
+                this.queryShow = true;
+              });
             } else {
               this.columns = [];
             }
