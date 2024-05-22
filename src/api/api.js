@@ -26,12 +26,9 @@ export default {
   getQueries(params) {
     return client.get("/queries", params);
   },
-  // postusers(params) {
-  //   return client.post("/users", params);
-  // },
-  // patchusers(params) {
-  //   return client.patch(`/users/${params.id}`, params);
-  // },
+  putQuery(params) {
+    return client.patch(`/queries/${params.id}`, params);
+  },
   // deleteUsers(params) {
   //   return client.delete(`/users/${params.user_id}`, params);
   // },

@@ -1,5 +1,5 @@
 <template>
-  <div class="campaign_analize">
+  <div class="query">
     <!-- side var  -->
     <SideVar />
     <!-- main div -->
@@ -23,11 +23,47 @@
           {{ errorMessage }}
         </div>
 
-        <div v-if="queryShow" class="mt-4">
+        <div v-if="queryShow" class="mt-8">
+          <h1 class="text-2xl font-bold mb-4 text-white">Query History</h1>
           <EasyDataTable :items="items" :headers="headers"></EasyDataTable>
           <!-- <DoButton :clickFunction="downloadCSVPromise" :values="{}">
             Download CSV
           </DoButton> -->
+        </div>
+      </div>
+
+      <!-- Edit Modal -->
+      <div
+        v-if="showEditModal"
+        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50"
+      >
+        <div class="bg-white p-4 rounded">
+          <h2 class="text-xl mb-4">Edit Item</h2>
+          <div class="mb-4">
+            <label class="block mb-2">Title</label>
+            <input
+              v-model="editItem.title"
+              class="w-full p-2 border rounded"
+              type="text"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block mb-2">Description</label>
+            <input
+              v-model="editItem.description"
+              class="w-full p-2 border rounded"
+              type="text"
+            />
+          </div>
+          <div class="flex justify-end">
+            <button @click="showEditModal = false" class="mr-4">Cancel</button>
+            <button
+              @click="saveEdit"
+              class="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
     </RightColumnOutline>
@@ -132,6 +168,33 @@ export default {
         document.body.removeChild(link);
         resolve("resolved");
       });
+    },
+    openEditModal(item) {
+      this.editItem = { ...item };
+      this.showEditModal = true;
+    },
+    saveEdit() {
+      api
+        .putQuery({
+          id: this.editItem.id,
+          title: this.editItem.title,
+          description: this.editItem.description,
+        })
+        .then((response) => {
+          console.log(response);
+          this.showEditModal = false;
+          this.updateItemInList(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errorMessage = "Error saving changes: " + error.message;
+        });
+    },
+    updateItemInList(updatedItem) {
+      const index = this.items.findIndex((item) => item.id === updatedItem.id);
+      if (index !== -1) {
+        this.items.splice(index, 1, updatedItem);
+      }
     },
   },
 };

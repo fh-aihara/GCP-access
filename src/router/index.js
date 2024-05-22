@@ -18,7 +18,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (store.getters.userId) {
         next({
-          path: "/table-view",
+          path: "/query",
         });
       } else {
         next();
@@ -32,7 +32,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (store.getters.userId) {
         next({
-          path: "/table-view",
+          path: "/query",
         });
       } else {
         next();
