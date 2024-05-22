@@ -23,7 +23,13 @@
           {{ errorMessage }}
         </div>
 
-        <div v-if="queryShow" class="mt-8">
+        <div v-if="queryResultShow" class="mt-12">
+          <h1 class="text-2xl font-bold mb-4 text-white">Query Result</h1>
+          <EasyDataTable :items="resultItems" :headers="resultHeaders">
+          </EasyDataTable>
+        </div>
+
+        <div v-if="queryShow" class="mt-12">
           <h1 class="text-2xl font-bold mb-4 text-white">Query History</h1>
           <EasyDataTable
             :items="items"
@@ -100,6 +106,9 @@ export default {
       columns: [],
       queries: [],
       queryShow: false,
+      queryResultShow: false,
+      resultItems: [],
+      resultHeaders: [],
       headers: [
         { text: "Actions", value: "actions", sortable: false },
         { text: "id", value: "id", sortable: true },
@@ -135,15 +144,25 @@ export default {
           .postBigquery({ sql: this.sqlQuery })
           .then((response) => {
             console.log(response);
+            this.queryResultShow = false; // 2回目以降のクエリ実行時にテーブルが表示されないようにする
             this.results = response.data.results;
             if (this.results.length > 0) {
               this.columns = Object.keys(this.results[0]).map((key) => ({
                 label: key,
                 field: key,
               }));
+              this.resultItems = this.results;
+              for (let i = 0; i < this.columns.length; i++) {
+                this.resultHeaders.push({
+                  text: this.columns[i].label,
+                  value: this.columns[i].label,
+                });
+              }
+              console.log(this.resultHeaders);
+              console.log(this.resultItems);
+              this.queryResultShow = true;
               let output =
                 this.columns.map((col) => col.label).join(",") + "\n";
-              console.log(this.results.length);
               for (let i = 0; i < this.results.length; i++) {
                 for (let j = 0; j < this.columns.length; j++) {
                   output += this.results[i][this.columns[j].label] + ",";
