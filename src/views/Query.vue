@@ -28,8 +28,8 @@
           <EasyDataTable
             :items="items"
             :headers="headers"
-            :sortBy="id"
-            :sortType="desc"
+            :sortBy="'id'"
+            :sortType="'desc'"
           >
             <template #item-actions="{ id, title, description }">
               <button
