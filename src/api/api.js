@@ -7,6 +7,7 @@ if (JSON.parse(process.env.VUE_APP_ENDPOINT_USE_PROD)) {
 } else {
   base = "http://127.0.0.1:8000/api/";
 }
+console.log(base);
 export const client = axios.create({
   baseURL: base,
 });
