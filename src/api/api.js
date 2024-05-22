@@ -19,10 +19,6 @@ export default {
   login(params) {
     return client.post("/login", params);
   },
-  // },
-  // getevents(params) {
-  //   return client.get("/events", params);
-  // },
   postBigquery(params) {
     return client.post("/gcp/query", params);
   },
