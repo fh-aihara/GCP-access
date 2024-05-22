@@ -27,7 +27,7 @@ export default {
     return client.get("/queries", params);
   },
   putQuery(params) {
-    return client.patch(`/queries/${params.id}`, params);
+    return client.put(`/queries/${params.id}`, params);
   },
   // deleteUsers(params) {
   //   return client.delete(`/users/${params.user_id}`, params);

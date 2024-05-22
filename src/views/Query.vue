@@ -180,9 +180,11 @@ export default {
     },
     openEditModal(id, title, description) {
       this.editItem = { id: id, title: title, description: description };
+      console.log(this.editItem);
       this.showEditModal = true;
     },
     saveEdit() {
+      console.lot(this.editItem);
       api
         .putQuery({
           id: this.editItem.id,
