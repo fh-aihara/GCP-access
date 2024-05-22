@@ -101,6 +101,7 @@ export default {
           value: "last_query_records",
           sortable: true,
         },
+        { text: "Actions", value: "actions", sortable: false },
       ],
       items: [],
     };
