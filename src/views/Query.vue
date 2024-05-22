@@ -25,7 +25,12 @@
 
         <div v-if="queryShow" class="mt-8">
           <h1 class="text-2xl font-bold mb-4 text-white">Query History</h1>
-          <EasyDataTable :items="items" :headers="headers">
+          <EasyDataTable
+            :items="items"
+            :headers="headers"
+            :sortBy="id"
+            :sortType="desc"
+          >
             <template #item-actions="{ id, title, description }">
               <button
                 @click="openEditModal(id, title, description)"
@@ -41,31 +46,36 @@
       <!-- Edit Modal -->
       <div
         v-if="showEditModal"
-        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50"
+        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"
       >
-        <div class="bg-white p-4 rounded">
-          <h2 class="text-xl mb-4">Edit Item</h2>
-          <div class="mb-4">
-            <label class="block mb-2">Title</label>
+        <div class="bg-white p-8 rounded w-3/4 max-w-3xl">
+          <h2 class="text-2xl mb-6">Edit Item</h2>
+          <div class="mb-6">
+            <label class="block mb-2 text-lg">Title</label>
             <input
               v-model="editItem.title"
-              class="w-full p-2 border rounded"
+              class="w-full p-3 border rounded"
               type="text"
             />
           </div>
-          <div class="mb-4">
-            <label class="block mb-2">Description</label>
-            <input
+          <div class="mb-6">
+            <label class="block mb-2 text-lg">Description</label>
+            <textarea
               v-model="editItem.description"
-              class="w-full p-2 border rounded"
-              type="text"
-            />
+              class="w-full p-3 border rounded"
+              rows="5"
+            ></textarea>
           </div>
           <div class="flex justify-end">
-            <button @click="showEditModal = false" class="mr-4">Cancel</button>
+            <button
+              @click="showEditModal = false"
+              class="mr-4 px-4 py-2 border rounded"
+            >
+              Cancel
+            </button>
             <button
               @click="saveEdit"
-              class="bg-blue-500 text-white px-4 py-2 rounded"
+              class="bg-blue-500 text-white px-6 py-3 rounded"
             >
               Save
             </button>
@@ -91,6 +101,7 @@ export default {
       queries: [],
       queryShow: false,
       headers: [
+        { text: "Actions", value: "actions", sortable: false },
         { text: "id", value: "id", sortable: true },
         { text: "SQL", value: "SQL", sortable: true },
         { text: "created_at", value: "created_at", sortable: true },
@@ -101,7 +112,6 @@ export default {
           value: "last_query_records",
           sortable: true,
         },
-        { text: "Actions", value: "actions", sortable: false },
       ],
       items: [],
       showEditModal: false,
