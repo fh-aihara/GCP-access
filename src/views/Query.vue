@@ -23,12 +23,12 @@
           {{ errorMessage }}
         </div>
 
-        <div v-if="chartShow" class="mt-4">
+        <!-- <div v-if="chartShow" class="mt-4">
           <EasyDataTable :items="results" :headers="columns"></EasyDataTable>
           <DoButton :clickFunction="downloadCSVPromise" :values="{}">
             Download CSV
           </DoButton>
-        </div>
+        </div> -->
       </div>
     </RightColumnOutline>
   </div>
@@ -36,7 +36,6 @@
 
 <script>
 import api from "../api/api.js";
-// import axios from "axios";
 
 export default {
   name: "tableView",
@@ -47,7 +46,6 @@ export default {
       errorMessage: "",
       results: [],
       columns: [],
-      chartShow: false,
     };
   },
   mounted() {},
@@ -66,7 +64,21 @@ export default {
                 label: key,
                 field: key,
               }));
-              this.chartShow = true;
+              let output =
+                this.columns.map((col) => col.label).join(",") + "\n";
+              for (let i = 0; i < this.results.length; i++) {
+                output +=
+                  this.results
+                    .map((col) => this.results[i][col.field])
+                    .join(",") + "\n";
+              }
+              let csv = "\ufeff";
+              csv += output;
+              let blob = new Blob([csv], { type: "text/csv" });
+              let link = document.createElement("a");
+              link.href = window.URL.createObjectURL(blob);
+              link.download = "sociama_ranking.csv";
+              link.click();
             } else {
               this.columns = [];
             }
