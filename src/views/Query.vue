@@ -15,12 +15,9 @@
             placeholder="Enter your SQL query here"
           ></textarea>
         </div>
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          @click="executeQuery"
-        >
+        <DoButton :clickFunction="executeQueryPromise" :values="{}">
           クエリ実行
-        </button>
+        </DoButton>
 
         <div v-if="errorMessage" class="mt-4 text-red-500">
           {{ errorMessage }}
@@ -57,28 +54,32 @@ export default {
   mounted() {},
   computed: {},
   methods: {
-    executeQuery() {
-      console.log("executing query...");
-      api
-        .postBigquery({ sql: this.sqlQuery })
-        .then((response) => {
-          console.log(response);
-          this.results = response.data;
-          if (this.results.length > 0) {
-            this.columns = Object.keys(this.results[0]).map((key) => ({
-              label: key,
-              field: key,
-            }));
-          } else {
+    executeQueryPromise() {
+      return new Promise((resolve) => {
+        console.log("executing query...");
+        api
+          .postBigquery({ sql: this.sqlQuery })
+          .then((response) => {
+            console.log(response);
+            this.results = response.data.results;
+            if (this.results.length > 0) {
+              this.columns = Object.keys(this.results[0]).map((key) => ({
+                label: key,
+                field: key,
+              }));
+            } else {
+              this.columns = [];
+            }
+            this.errorMessage = "";
+            resolve("resolved");
+          })
+          .catch((error) => {
+            this.errorMessage = "Error executing query: " + error.message;
+            this.results = [];
             this.columns = [];
-          }
-          this.errorMessage = "";
-        })
-        .catch((error) => {
-          this.errorMessage = "Error executing query: " + error.message;
-          this.results = [];
-          this.columns = [];
-        });
+            resolve("resolved");
+          });
+      });
     },
   },
   downloadCSV() {
