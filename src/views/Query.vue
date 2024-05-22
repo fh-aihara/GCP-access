@@ -57,6 +57,7 @@ export default {
   computed: {},
   methods: {
     executeQuery() {
+      console.log("executing query...");
       api
         .postBigquery({ sql: this.sqlQuery })
         .then((response) => {
