@@ -69,7 +69,7 @@ export default {
               for (let i = 0; i < this.results.length; i++) {
                 output +=
                   this.results
-                    .map((col) => this.results[i][col.field])
+                    .map((col) => this.results[i][col.label])
                     .join(",") + "\n";
               }
               let csv = "\ufeff";
@@ -77,7 +77,7 @@ export default {
               let blob = new Blob([csv], { type: "text/csv" });
               let link = document.createElement("a");
               link.href = window.URL.createObjectURL(blob);
-              link.download = "sociama_ranking.csv";
+              link.download = "itandi_prod_data.csv";
               link.click();
             } else {
               this.columns = [];
