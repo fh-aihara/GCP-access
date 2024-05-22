@@ -58,8 +58,9 @@ export default {
   methods: {
     executeQuery() {
       api
-        .postBigquery({ SQL: this.sqlQuery })
+        .postBigquery({ sql: this.sqlQuery })
         .then((response) => {
+          console.log(response);
           this.results = response.data;
           if (this.results.length > 0) {
             this.columns = Object.keys(this.results[0]).map((key) => ({
