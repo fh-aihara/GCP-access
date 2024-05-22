@@ -23,13 +23,11 @@
           {{ errorMessage }}
         </div>
 
-        <div v-if="results.length" class="mt-4">
+        <div v-if="chartShow" class="mt-4">
           <easy-data-table :data="results" :columns="columns"></easy-data-table>
-          <button
-            class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
+          <DoButton :clickFunction="downloadCSVPromise" :values="{}">
             Download CSV
-          </button>
+          </DoButton>
         </div>
       </div>
     </RightColumnOutline>
@@ -49,6 +47,7 @@ export default {
       errorMessage: "",
       results: [],
       columns: [],
+      chartShow: false,
     };
   },
   mounted() {},
@@ -67,6 +66,7 @@ export default {
                 label: key,
                 field: key,
               }));
+              this.chartShow = true;
             } else {
               this.columns = [];
             }
@@ -82,19 +82,22 @@ export default {
       });
     },
   },
-  downloadCSV() {
-    const headers = this.columns.map((col) => col.label).join(",");
-    const rows = this.results
-      .map((row) => this.columns.map((col) => row[col.field]).join(","))
-      .join("\n");
-    const csvContent = `data:text/csv;charset=utf-8,${headers}\n${rows}`;
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "results.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  downloadCSVPromise() {
+    return new Promise((resolve) => {
+      const headers = this.columns.map((col) => col.label).join(",");
+      const rows = this.results
+        .map((row) => this.columns.map((col) => row[col.field]).join(","))
+        .join("\n");
+      const csvContent = `data:text/csv;charset=utf-8,${headers}\n${rows}`;
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "results.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      resolve("resolved");
+    });
   },
 };
 </script>
