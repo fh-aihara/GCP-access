@@ -104,6 +104,8 @@ export default {
         { text: "Actions", value: "actions", sortable: false },
       ],
       items: [],
+      showEditModal: false,
+      editItem: {},
     };
   },
   mounted() {
