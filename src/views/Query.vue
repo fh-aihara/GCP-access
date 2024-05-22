@@ -24,10 +24,7 @@
         </div>
 
         <div v-if="chartShow" class="mt-4">
-          <easy-data-table
-            :items="results"
-            :headers="columns"
-          ></easy-data-table>
+          <EasyDataTable :items="results" :headers="columns"></EasyDataTable>
           <DoButton :clickFunction="downloadCSVPromise" :values="{}">
             Download CSV
           </DoButton>
