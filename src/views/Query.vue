@@ -28,7 +28,7 @@
           <EasyDataTable :items="items" :headers="headers">
             <template #item-actions="{ id, title, description }">
               <button
-                @click="openEditModal({ id, title, description })"
+                @click="openEditModal(id, title, description)"
                 class="text-blue-500"
               >
                 Edit
@@ -184,7 +184,7 @@ export default {
       this.showEditModal = true;
     },
     saveEdit() {
-      console.lot(this.editItem);
+      console.log(this.editItem);
       api
         .putQuery({
           id: this.editItem.id,
