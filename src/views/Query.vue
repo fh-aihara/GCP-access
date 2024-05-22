@@ -24,7 +24,10 @@
         </div>
 
         <div v-if="chartShow" class="mt-4">
-          <easy-data-table :data="results" :columns="columns"></easy-data-table>
+          <easy-data-table
+            :items="results"
+            :headers="columns"
+          ></easy-data-table>
           <DoButton :clickFunction="downloadCSVPromise" :values="{}">
             Download CSV
           </DoButton>
@@ -81,23 +84,23 @@ export default {
           });
       });
     },
-  },
-  downloadCSVPromise() {
-    return new Promise((resolve) => {
-      const headers = this.columns.map((col) => col.label).join(",");
-      const rows = this.results
-        .map((row) => this.columns.map((col) => row[col.field]).join(","))
-        .join("\n");
-      const csvContent = `data:text/csv;charset=utf-8,${headers}\n${rows}`;
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "results.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      resolve("resolved");
-    });
+    downloadCSVPromise() {
+      return new Promise((resolve) => {
+        const headers = this.columns.map((col) => col.label).join(",");
+        const rows = this.results
+          .map((row) => this.columns.map((col) => row[col.field]).join(","))
+          .join("\n");
+        const csvContent = `data:text/csv;charset=utf-8,${headers}\n${rows}`;
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "results.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        resolve("resolved");
+      });
+    },
   },
 };
 </script>
