@@ -26,15 +26,15 @@
         <div v-if="queryShow" class="mt-8">
           <h1 class="text-2xl font-bold mb-4 text-white">Query History</h1>
           <EasyDataTable :items="items" :headers="headers">
-            <template v-slot:actions="{ item }">
-              <button @click="openEditModal(item)" class="text-blue-500">
+            <template #item-actions="{ id, title, description }">
+              <button
+                @click="openEditModal({ id, title, description })"
+                class="text-blue-500"
+              >
                 Edit
               </button>
             </template>
           </EasyDataTable>
-          <!-- <DoButton :clickFunction="downloadCSVPromise" :values="{}">
-            Download CSV
-          </DoButton> -->
         </div>
       </div>
 
@@ -178,8 +178,8 @@ export default {
         resolve("resolved");
       });
     },
-    openEditModal(item) {
-      this.editItem = { ...item };
+    openEditModal(id, title, description) {
+      this.editItem = { id: id, title: title, description: description };
       this.showEditModal = true;
     },
     saveEdit() {
