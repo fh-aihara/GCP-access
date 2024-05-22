@@ -23,12 +23,12 @@
           {{ errorMessage }}
         </div>
 
-        <!-- <div v-if="chartShow" class="mt-4">
-          <EasyDataTable :items="results" :headers="columns"></EasyDataTable>
-          <DoButton :clickFunction="downloadCSVPromise" :values="{}">
+        <div v-if="queryShow" class="mt-4">
+          <EasyDataTable :items="items" :headers="headers"></EasyDataTable>
+          <!-- <DoButton :clickFunction="downloadCSVPromise" :values="{}">
             Download CSV
-          </DoButton>
-        </div> -->
+          </DoButton> -->
+        </div>
       </div>
     </RightColumnOutline>
   </div>
@@ -46,9 +46,31 @@ export default {
       errorMessage: "",
       results: [],
       columns: [],
+      queries: [],
+      queryShow: false,
+      headers: [
+        { text: "id", value: "id", sortable: true },
+        { text: "SQL", value: "SQL", sortable: true },
+        { text: "created_at", value: "created_at", sortable: true },
+        { text: "title", value: "title", sortable: true },
+        { text: "description", value: "description", sortable: true },
+        {
+          text: "last_query_records",
+          value: "last_query_records",
+          sortable: true,
+        },
+      ],
+      items: [],
     };
   },
-  mounted() {},
+  mounted() {
+    api.getQueries().then((response) => {
+      console.log(response);
+      this.queries = response.data;
+      this.items = this.queries;
+      this.queryShow = true;
+    });
+  },
   computed: {},
   methods: {
     executeQueryPromise() {

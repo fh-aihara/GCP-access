@@ -22,15 +22,9 @@ export default {
   postBigquery(params) {
     return client.post("/gcp/query", params);
   },
-  // deleteEvent(params) {
-  //   return client.delete(`/events/${params.event_id}/cancel`, params);
-  // },
-  // patchevents(params) {
-  //   return client.patch(`/events/${params.id}`, params);
-  // },
-  // getusers(params) {
-  //   return client.get("/users", params);
-  // },
+  getQueries(params) {
+    return client.get("/queries", params);
+  },
   // postusers(params) {
   //   return client.post("/users", params);
   // },
