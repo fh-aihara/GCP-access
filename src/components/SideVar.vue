@@ -27,22 +27,22 @@
                 </a>
               </router-link>
             </li>
-            <!-- <li class="py-3">
-              <router-link to="/kyc-list">
+            <li class="py-3">
+              <router-link to="/rentroll">
                 <a
                   class="flex items-center p-3 rounded-xl"
                   :class="
-                    focuspage == '/kyc-list'
-                      ? 'text-white bg-green-500'
-                      : 'text-green-900 hover:bg-green-600'
+                    focuspage == '/rentroll'
+                      ? 'text-white bg-gray-500'
+                      : 'text-gray-900 hover:bg-gray-600'
                   "
                   href="#"
                 >
-                  <span class="pi pi-file-edit"> </span>
-                  <span class="ml-4 text-sm font-semibold">KYC審査</span>
+                  <span class="pi pi-book"> </span>
+                  <span class="ml-4 text-sm font-semibold">レントロール</span>
                 </a>
               </router-link>
-            </li> -->
+            </li>
           </ul>
         </div>
         <div class="pt-20">
