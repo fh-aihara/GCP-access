@@ -79,8 +79,10 @@ export default {
             link.href = url;
 
             // ファイル名を設定
+            // const filename =
+            //   response.headers["content-disposition"].split("filename=")[1];
             const filename =
-              response.headers["content-disposition"].split("filename=")[1];
+              this.property_customer_managed_id + "_rentroll.csv";
             link.setAttribute("download", filename);
 
             // ファイルを自動的にダウンロード
