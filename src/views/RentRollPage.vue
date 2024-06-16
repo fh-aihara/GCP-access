@@ -82,7 +82,7 @@ export default {
             // const filename =
             //   response.headers["content-disposition"].split("filename=")[1];
             const filename =
-              this.property_customer_managed_id + "_rentroll.csv";
+              this.property_customer_managed_id + "_rentroll.xlsx";
             link.setAttribute("download", filename);
 
             // ファイルを自動的にダウンロード
