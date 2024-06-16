@@ -16,7 +16,7 @@
             id="property-id"
             class="w-full p-2 border rounded w-1/3"
             type="text"
-            placeholder="Enter 物件ID"
+            placeholder="物件IDを入力してください"
             v-model="property_customer_managed_id"
           />
         </div>
@@ -36,6 +36,7 @@
             class="bg-blue-500 text-white px-6 py-3 rounded"
             :clickFunction="getRentRollPromise"
             :values="{}"
+            :disabled="property_customer_managed_id === ''"
           >
             レントロール取得
           </DoButton>
