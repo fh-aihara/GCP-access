@@ -30,6 +30,6 @@ export default {
     return client.put(`/queries/${params.id}`, params);
   },
   postRentRoll(params) {
-    return client.post("/gcp/rentroll", params);
+    return client.post("/gcp/rentroll", params, { responseType: "blob" });
   },
 };

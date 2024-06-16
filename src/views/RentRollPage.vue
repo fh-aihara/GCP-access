@@ -73,6 +73,22 @@ export default {
           })
           .then((response) => {
             console.log(response);
+            // ブラウザ上でファイルを作成
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+
+            // ファイル名を設定
+            const filename =
+              response.headers["content-disposition"].split("filename=")[1];
+            link.setAttribute("download", filename);
+
+            // ファイルを自動的にダウンロード
+            document.body.appendChild(link);
+            link.click();
+
+            // その後、リンクを削除
+            link.remove();
             resolve("resolved");
           })
           .catch((error) => {
