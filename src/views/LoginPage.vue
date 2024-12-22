@@ -111,7 +111,7 @@ export default {
             });
             this.loading = false;
             this.$store.commit("updateuserId", 1);
-            this.$router.replace("/query");
+            this.$router.replace("/rentroll");
           }
         })
         .catch((error) => {

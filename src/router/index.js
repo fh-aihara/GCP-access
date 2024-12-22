@@ -2,17 +2,17 @@ import { createRouter, createWebHistory } from "vue-router";
 import store from "@/store";
 
 import LoginView from "../views/LoginPage.vue";
-import QueryView from "../views/Query";
+// import QueryView from "../views/Query";
 import RentRollView from "../views/RentRollPage.vue";
 import KeiriView from "../views/KeiriPage.vue";
 
 const routes = [
-  {
-    path: "/query",
-    name: "query",
-    component: QueryView,
-    meta: { requiresAuth: true },
-  },
+  // {
+  //   path: "/query",
+  //   name: "query",
+  //   component: QueryView,
+  //   meta: { requiresAuth: true },
+  // },
   {
     path: "/rentroll",
     name: "rentroll",
