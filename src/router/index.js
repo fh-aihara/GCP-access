@@ -4,6 +4,7 @@ import store from "@/store";
 import LoginView from "../views/LoginPage.vue";
 import QueryView from "../views/Query";
 import RentRollView from "../views/RentRollPage.vue";
+import KeiriView from "../views/KeiriPage.vue";
 
 const routes = [
   {
@@ -16,6 +17,12 @@ const routes = [
     path: "/rentroll",
     name: "rentroll",
     component: RentRollView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/keiri",
+    name: "keiri",
+    component: KeiriView,
     meta: { requiresAuth: true },
   },
   {

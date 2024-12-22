@@ -11,7 +11,7 @@
             </router-link>
           </a>
           <ul>
-            <li class="py-3">
+            <!-- <li class="py-3">
               <router-link to="/query">
                 <a
                   class="flex items-center p-3 rounded-xl"
@@ -26,7 +26,7 @@
                   <span class="ml-4 text-sm font-semibold">本番データ取得</span>
                 </a>
               </router-link>
-            </li>
+            </li> -->
             <li class="py-3">
               <router-link to="/rentroll">
                 <a
@@ -40,6 +40,25 @@
                 >
                   <span class="pi pi-book"> </span>
                   <span class="ml-4 text-sm font-semibold">レントロール</span>
+                </a>
+              </router-link>
+            </li>
+            <!-- 経理帳票ダウンロードメニューを追加 -->
+            <li class="py-3">
+              <router-link to="/keiri">
+                <a
+                  class="flex items-center p-3 rounded-xl"
+                  :class="
+                    focuspage == '/keiri'
+                      ? 'text-white bg-gray-500'
+                      : 'text-gray-900 hover:bg-gray-600'
+                  "
+                  href="#"
+                >
+                  <span class="pi pi-file"> </span>
+                  <span class="ml-4 text-sm font-semibold"
+                    >経理帳票ダウンロード</span
+                  >
                 </a>
               </router-link>
             </li>

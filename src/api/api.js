@@ -32,4 +32,20 @@ export default {
   postRentRoll(params) {
     return client.post("/gcp/rentroll", params, { responseType: "blob" });
   },
+   // 出納帳データの取得
+   getSuitotyo(params) {
+    return client.post("/gcp/suitotyo", {
+      start_date: params.start_date,
+      end_date: params.end_date,
+      account: params.account
+    });
+  },
+
+  // 保証会社未マッチリストの取得
+  getHosyoKaisyaUnmatch(params) {
+    return client.post("/gcp/hosyo-kaisya-unmatch", {
+      start_date: params.start_date,
+      end_date: params.end_date
+    });
+  }
 };
