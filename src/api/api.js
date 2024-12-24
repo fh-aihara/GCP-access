@@ -44,8 +44,8 @@ export default {
   // 保証会社未マッチリストの取得
   getHosyoKaisyaUnmatch(params) {
     return client.post("/gcp/hosyo-kaisya-unmatch", {
-      start_date: params.start_date,
-      end_date: params.end_date,
+      account_year: params.account_year,
+      account_month: params.account_month,
     });
   },
 };
