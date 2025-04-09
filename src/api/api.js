@@ -1,5 +1,5 @@
 import axios from "axios";
-// import store from "@/store";
+import store from "@/store"; // storeをインポート
 
 let base = "";
 if (JSON.parse(process.env.VUE_APP_ENDPOINT_USE_PROD)) {
@@ -12,7 +12,19 @@ export const client = axios.create({
   baseURL: base,
 });
 
+// リクエストインターセプター：ユーザーIDをヘッダーに追加
 client.interceptors.request.use(async (config) => {
+  // storeからユーザーIDを取得
+  const userId = store.getters.userId;
+
+  // ユーザーIDが存在する場合、ヘッダーに追加
+  if (userId) {
+    config.headers = {
+      ...config.headers,
+      "X-User-ID": userId,
+    };
+  }
+
   return config;
 });
 

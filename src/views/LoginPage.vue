@@ -85,7 +85,9 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          if (response.data == "WRONG") {
+          const data = response.data;
+
+          if (data.message === "wrong") {
             this.$toast.show("ユーザー名又はパスワードが間違っています", {
               type: "error",
               position: "top-right",
@@ -94,7 +96,8 @@ export default {
             this.loading = false;
             return;
           }
-          if (response.data == "ERROR") {
+
+          if (data.message === "error") {
             this.$toast.show("エラーが発生しました。", {
               type: "error",
               position: "top-right",
@@ -103,14 +106,19 @@ export default {
             this.loading = false;
             return;
           }
-          if (response.data == "SUCCESS") {
+
+          if (data.message === "success") {
             this.$toast.show("ログインに成功しました", {
               type: "success",
               position: "top-right",
               duration: 3000,
             });
+
+            // ユーザーIDとアクセス権限を保存
+            this.$store.commit("updateuserId", data.user_id);
+            this.$store.commit("updateauthority", data.auth);
+
             this.loading = false;
-            this.$store.commit("updateuserId", 1);
             this.$router.replace("/rentroll");
           }
         })

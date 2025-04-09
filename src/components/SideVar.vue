@@ -11,23 +11,8 @@
             </router-link>
           </a>
           <ul>
-            <!-- <li class="py-3">
-              <router-link to="/query">
-                <a
-                  class="flex items-center p-3 rounded-xl"
-                  :class="
-                    focuspage == '/query'
-                      ? 'text-white bg-gray-500'
-                      : 'text-gray-900 hover:bg-gray-600'
-                  "
-                  href="#"
-                >
-                  <span class="pi pi-book"> </span>
-                  <span class="ml-4 text-sm font-semibold">本番データ取得</span>
-                </a>
-              </router-link>
-            </li> -->
-            <li class="py-3">
+            <!-- レントロールメニュー - rentroll権限がある場合のみ表示 -->
+            <li class="py-3" v-if="hasRentrollAccess">
               <router-link to="/rentroll">
                 <a
                   class="flex items-center p-3 rounded-xl"
@@ -43,8 +28,9 @@
                 </a>
               </router-link>
             </li>
-            <!-- 経理帳票ダウンロードメニューを追加 -->
-            <li class="py-3">
+
+            <!-- 経理帳票ダウンロードメニュー - keiri権限がある場合のみ表示 -->
+            <li class="py-3" v-if="hasKeiriAccess">
               <router-link to="/keiri">
                 <a
                   class="flex items-center p-3 rounded-xl"
@@ -88,10 +74,27 @@ export default {
     focuspage: function () {
       return this.$route.path;
     },
+    // ユーザー権限を取得するコンピューテッドプロパティ
+    userAuthority: function () {
+      return this.$store.getters.authority;
+    },
+    // レントロールへのアクセス権限があるか確認
+    hasRentrollAccess: function () {
+      if (!this.userAuthority) return false;
+      return this.userAuthority.rentroll === true;
+    },
+    // 経理帳票へのアクセス権限があるか確認
+    hasKeiriAccess: function () {
+      if (!this.userAuthority) return false;
+      return this.userAuthority.keiri === true;
+    },
   },
   methods: {
     signOut() {
+      // ログアウト時に全ての認証情報をクリア
       this.$store.commit("updateuserId", null);
+      this.$store.commit("updateauthority", null);
+      this.$store.commit("updateauthToken", null);
       this.$router.go({ path: "/login", force: true });
     },
   },
